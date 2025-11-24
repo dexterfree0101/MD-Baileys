@@ -6,9 +6,10 @@
         "whatsapp-baileys"
     ],
     "homepage": "https://github.com/Tennor-modz/MD-Baileys",
-    "repository": {
-        "url": "https://github.com/Tennor-modz/MD-Baileys"
-    },
+"repository": {
+  "type": "git",
+  "url": "git+https://github.com/Tennor-modz/MD-Baileys.git"
+},
     "license": "MIT",
     "author": "Trashcore",
     "main": "lib/index.js",
