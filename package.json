@@ -10,7 +10,7 @@
         "url": "https://github.com/tenka-san/WaBails"
     },
     "license": "MIT",
-    "author": "7eppeli - Determinator",
+    "author": "Trashcore",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "files": [
