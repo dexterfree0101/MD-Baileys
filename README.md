@@ -1,15 +1,81 @@
 # MD-Baileys Upstream Patch
 
-This patch ports critical fixes and new systems from upstream Baileys v7 into MD-Baileys.
+This patch ports critical fixes and new systems from upstream Baileys v7 into **MD-Baileys**.
+
+> **MD-Baileys** is maintained by [Tennor-modz](https://github.com/Tennor-modz) — a modified fork of WhiskeySockets/Baileys built for multi-device WhatsApp bots with extended features and stability improvements.
 
 ---
 
-## 🐛 Bugs Fixed
+## 📦 Installation
+
+### Install from npm (recommended)
+
+```bash
+npm install @trashcore/baileys
+```
+
+```bash
+yarn add @trashcore/baileys
+```
+
+Then import in your project:
+
+```js
+// CommonJS
+const { makeWASocket } = require('@trashcore/baileys')
+
+// ESM
+import { makeWASocket } from '@trashcore/baileys'
+```
+
+---
+
+### Install as a drop-in replacement for @whiskeysockets/baileys
+
+If your existing bot already imports from `@whiskeysockets/baileys` and you don't want to change every import statement, you can alias MD-Baileys to replace it.
+
+**Option 1 — package.json alias (recommended)**
+
+Add this to your bot's `package.json`:
+
+```json
+"dependencies": {
+    "@whiskeysockets/baileys": "npm:@trashcore/baileys@latest"
+}
+```
+
+Then run:
+
+```bash
+npm install
+```
+
+All your existing `require('@whiskeysockets/baileys')` imports will now resolve to MD-Baileys with no code changes needed.
+
+**Option 2 — Install directly from GitHub**
+
+```bash
+npm install github:Tennor-modz/MD-Baileys
+```
+
+```bash
+yarn add github:Tennor-modz/MD-Baileys
+```
+
+Then import using the GitHub package name:
+
+```js
+const { makeWASocket } = require('@trashcore/baileys')
+```
+
+---
+
+## 🐛 Bugs Fixed by This Patch
 
 ### 1. Bad MAC Retry Loops (most impactful)
 **Symptom:** Messages fail to decrypt, triggering infinite retry receipts that never resolve. The bot gets stuck in a loop sending/receiving retry stanzas with the same contact forever.
 
-**Root cause:** The fork used a plain `Map` (`msgRetryCache`) with no intelligence about *why* decryption failed. MAC errors (Signal error codes `4` and `7`) mean the session is definitively out of sync — retrying the same session is pointless.
+**Root cause:** The fork used a plain `Map` (`msgRetryCache`) with no intelligence about *why* decryption failed. MAC errors (Signal error codes `4` and `7`) mean the session is definitively out of sync — retrying the same broken session is pointless.
 
 **Fix (`message-retry-manager.js`):** Replaces the plain Map with a full `MessageRetryManager` class that:
 - Identifies MAC errors via the `RetryReason` enum (`SignalErrorInvalidMessage = 4`, `SignalErrorBadMac = 7`)
@@ -127,7 +193,7 @@ Updated barrel file — re-exports all 6 new Utils modules in addition to all ex
 
 ---
 
-## 📁 File Placement
+## 📁 Patch File Placement
 
 ```
 your-md-baileys-repo/
@@ -148,16 +214,22 @@ your-md-baileys-repo/
 
 ---
 
-## 📦 New npm Dependencies
+## 🔧 New npm Dependencies Required
+
+After placing the files, install the two new dependencies:
 
 ```bash
 npm install lru-cache p-queue
 ```
 
+```bash
+yarn add lru-cache p-queue
+```
+
 - `lru-cache` — used by `MessageRetryManager` and `LIDMappingStore`
 - `p-queue` — used by `PreKeyManager` for per-keyType serialisation
 
-Check your existing `package.json` first — `lru-cache` may already be present.
+> `lru-cache` may already be in your `package.json` — check before installing.
 
 ---
 
@@ -170,3 +242,11 @@ These files are self-contained and will load without errors. However, to fully a
 - **`auth-utils.js`** — use `PreKeyManager` inside `addTransactionCapability` for pre-key operations
 
 Without those call-site changes, the new modules are importable but dormant.
+
+---
+
+## 🔗 Links
+
+- **Repository:** https://github.com/Tennor-modz/MD-Baileys
+- **Issues:** https://github.com/Tennor-modz/MD-Baileys/issues
+- **Upstream (WhiskeySockets/Baileys):** https://github.com/WhiskeySockets/Baileys
