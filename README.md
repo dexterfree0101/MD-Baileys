@@ -2,7 +2,7 @@
 
 This patch ports critical fixes and new systems from upstream Baileys v7 into **MD-Baileys**.
 
-> **MD-Baileys** is maintained by [Tennor-modz](https://github.com/Tennor-modz) — a modified fork of WhiskeySockets/Baileys built for multi-device WhatsApp bots with extended features and stability improvements.
+> **MD-Baileys** is maintained by [Tennor-modz](https://github.com/Tennor-modz) — a modified WhatsApp api built for multi-device WhatsApp bots with extended features and stability improvements.
 
 ---
 
