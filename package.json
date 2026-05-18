@@ -1,6 +1,6 @@
 {
     "name": "@trashcore/baileys",
-    "version": "4.1.6",
+    "version": "4.1.7",
     "description": "WhatsApp Modified By Trashcore",
     "keywords": [
         "whatsapp-baileys"
@@ -46,6 +46,7 @@
         "lodash": "^4.17.21",
         "lru-cache": "^11.1.0",
         "music-metadata": "^7.12.3",
+        "node-cache": "^5.1.2",
         "node-fetch": "^2.6.1",
         "p-queue": "^9.0.0",
         "pino": "^9.6.0",
